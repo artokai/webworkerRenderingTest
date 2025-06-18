@@ -26,8 +26,13 @@ type IncomingMesssage = CancelMessage | DrawMessage;
 
 const workerFunction = () => {
   class AsyncQueue<T> {
-    private queue: T[] = [];
-    private resolvers: ((value: T) => void)[] = [];
+    private queue: T[];
+    private resolvers: ((value: T) => void)[];
+
+    constructor() {
+      this.queue = [];
+      this.resolvers = [];
+    }
 
     public enqueue(item: T) {
       if (this.resolvers.length > 0) {
@@ -239,7 +244,13 @@ const workerFunction = () => {
 // all necessary code to live inside the worker function.
 // Better way would be to create a separate js-bundle for the worker
 export const createWebWorker = () => {
-  const blob = new Blob([`(${workerFunction.toString()})()`], {
+  const viteDistStuff = `
+    var __defProp = Object.defineProperty;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
+  `;
+
+  const blob = new Blob([`${viteDistStuff}\n(${workerFunction.toString()})()`], {
     type: "application/javascript",
   });
   const worker = new Worker(URL.createObjectURL(blob));
