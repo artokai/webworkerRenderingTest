@@ -1,0 +1,20 @@
+.viewer {
+  position: relative;
+  border: 1px solid black;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  user-select: none;
+}
+
+.info {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+}
