@@ -1,10 +1,10 @@
 import type { Rectangle } from "../types";
 
-type CancelMessage = {
+export type CancelMessage = {
   action: "cancel";
 };
 
-type DrawMessage = {
+export type DrawMessage = {
   action: "draw";
   imageDimensions: {
     width: number;
@@ -22,7 +22,7 @@ export type DrawResult = {
   bitmap: ImageBitmap;
 };
 
-type IncomingMesssage = CancelMessage | DrawMessage;
+export type IncomingMesssage = CancelMessage | DrawMessage;
 
 const workerFunction = () => {
   class AsyncQueue<T> {

@@ -173,6 +173,17 @@ const Viewer: React.FC<ViewerProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // stop autoscroll on unmount
+  useEffect(() => {
+    return () => {
+      if (scrollIntervalRef.current) {
+        clearInterval(scrollIntervalRef.current);
+        scrollIntervalRef.current = 0;
+      }
+    };
+  }, []);
+
+
   return (
     <>
       <div className={styles.viewer} style={containerStyle} {...dragHandlers}>
